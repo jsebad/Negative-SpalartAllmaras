@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "myTurbulentFluidThermoModels.C": "cpp",
+        "negSpalartAllmaras.C": "cpp"
+    }
+}
