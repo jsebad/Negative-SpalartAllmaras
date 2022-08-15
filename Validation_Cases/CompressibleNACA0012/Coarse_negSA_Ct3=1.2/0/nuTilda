@@ -1,0 +1,50 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2012                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      nuTilda;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 2 -1 0 0 0 0];
+
+nuTildaInlet    7.9450E-05;
+
+internalField   uniform $nuTildaInlet;
+
+boundaryField
+{
+    /*
+    freestream
+    {
+        type        inletOutlet;
+        inletValue  uniform $nuTildaInlet;
+        value       uniform $nuTildaInlet;
+    }
+    */
+
+    freestream
+    {
+        type    freestream;
+        freestreamValue     uniform $nuTildaInlet;
+    }
+
+    wall
+    {
+        type            fixedValue;
+        value           uniform 0;
+    }
+
+    #includeEtc "caseDicts/setConstraintTypes"
+
+}
+
+// ************************************************************************* //

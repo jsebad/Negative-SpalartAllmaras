@@ -1,0 +1,41 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2012                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+forceCoeffs1
+{
+    type            forceCoeffs;
+
+    libs            (forces);
+
+    writeControl    writeTime;
+    //timeInterval    1;
+
+    log             yes;
+
+    patches         (airfoilLower airfoilUpper);
+    rho             rhoInf;      // Indicates incompressible
+    rhoInf          1;           // Required when rho = rhoInf
+    liftDir         (-0.1750	0.9846	0);
+    dragDir         (0.9846	0.1750	0);
+    CofR            (0.25 0 0);  // Axle midpoint on ground
+    pitchAxis       (0 0 1);
+    magUInf         62.766;
+    lRef            1;        // 
+    Aref            1;        // Estimated
+    /*
+    binData
+    {
+        nBin        20;          // output data into 20 bins
+        direction   (1 0 0);     // bin direction
+        cumulative  yes;
+    }
+    */
+}
+
+
+// ************************************************************************* //

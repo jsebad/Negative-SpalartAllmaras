@@ -1,0 +1,166 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  6
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     rhoSimpleFoam;
+
+startFrom       latestTime;
+//startFrom       startTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         15000;
+
+deltaT          1;
+
+writeControl    timeStep;
+
+writeInterval   100;
+
+purgeWrite      2;
+
+writeFormat     ascii;
+
+writePrecision   8;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   6;
+
+runTimeModifiable true;
+
+functions
+{
+    #includeFunc MachNo
+   // #includeFunc residuals
+   #include "forceCoeffTrigger"
+
+///////////////////////////////////////////////////////////////////////////
+minmaxdomain
+{
+	type fieldMinMax;
+	//type banana;
+
+	functionObjectLibs ("libfieldFunctionObjects.so");
+
+	enabled true;
+
+	mode component;
+
+	writeControl timeStep;
+	writeInterval 1;
+
+	log true;
+
+	fields (p U T rho k omega);
+	//fields (p U T thermo:mu);
+}
+///////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////
+
+yplus
+{
+    type                yPlus;
+    functionObjectLibs  ("libutilityFunctionObjects.so");
+
+    enabled true;
+
+    writeControl outputTime;
+}
+
+///////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////
+    forces_coeffs
+    {
+        type            forceCoeffs;
+        functionObjectLibs ( "libforces.so" );
+        writeControl   timeStep;
+        writeInterval  1;
+
+        patches
+        (
+	        aerofoil
+        );
+
+        pName       p;
+        UName       U;
+        log         true;
+
+        //// Density
+        //rhoName rhoInf;			//for incompressible uncomment and define rhoInf
+        rhoInf 0.8984926;		    //dummy value for compressible flows
+
+        CofR        ( 0 0 0 );
+
+//AOA 1.55
+        liftDir     ( -0.02705 0.99963 0 );	//-sin AOA, cos AOA, 0 AOA in RAD
+        dragDir     ( 0.99963 0.02705 0 );	// cos AOA, sin AOA, 0 AOA in RAD
+
+        //liftDir     ( 0 1 0 );
+        //dragDir     ( 1 0 0 );
+
+        pitchAxis   ( 0 0 1);
+        magUInf     236;
+        //magUInf     236.07;
+
+        lRef        1;
+        Aref        0.2;
+}
+///////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////
+    forces
+    {
+        type            forces;
+        libs            ("libforces.so");
+        patches         (aerofoil);
+        rhoInf          0.8984926;
+        log             on;
+        writeControl    timeStep;
+        writeInterval   1;
+        CofR            (0 0 0);
+    }
+///////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////
+/*
+    pressure_coe
+    {
+        type        	pressure;
+        libs        	("libfieldFunctionObjects.so");
+        calcTotal   	no;
+        calcCoeff   	yes;
+	pInf 		73048;
+	UInf		(236.0771 0 0);
+	//UInf 		(235.98 6.38 0);
+	rhoInf		0.8984926;
+	result		cp;
+        writeControl    outputTime;
+    }
+*/
+///////////////////////////////////////////////////////////////////////////
+
+}
+
+libs ("libmyCompressibleTurbulenceModels.so");
+
+// ************************************************************************* //

@@ -1,0 +1,15 @@
+pressureCoeff1
+{
+    type        pressure;
+    libs        (fieldFunctionObjects);
+    writeControl        writeTime;
+
+    mode        staticCoeff;
+    result      cp;
+
+    rho         rhoInf;
+    rhoInf         1.0;
+
+    pInf        0;
+    UInf        (44.2 0 0);     
+}

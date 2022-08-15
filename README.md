@@ -1,0 +1,4 @@
+## Purpose
+ 
+Turbulence plays a key role in most engineering and science applications, hence the need for reliable mathematical tools that can capture the main aspects of turbulent flows without an excessive demand on computational power so a broad community can assess their suitability in a number of cases. The Spalart-Allmaras model has proved to be reliable in various situations, especially in aerodynamic flows and, due
+to its single transport equation, the hardware requirements are not prohibitively, nonetheless, some authors have pointed out some problems at the edge of boundary layers and wakes where the transported variable may become negative on under-resolved grids. The negative Spalart-Allmaras model is proposed to treat adequately the aforementioned situation by introducing a new equation that is solved instead of the standard one in those regions where the turbulent variable ̃ν < 0.

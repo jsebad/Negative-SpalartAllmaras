@@ -1,0 +1,35 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  6.x                                   |
+|   \\  /    A nd           | Website:  https://openfoam.org                  |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      functionObject;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+functions
+{
+
+///////////////////////////////////////////////////////////////////////////
+    pressure_coe
+    {
+        type        	pressure;
+        libs        	("libfieldFunctionObjects.so");
+        calcTotal   	no;
+        calcCoeff   	yes;
+	pInf 		73048;
+	UInf		(236.0771 0 0);
+	//UInf 		(235.98 6.38 0);
+	rhoInf		0.8984926;
+	result		cp;
+    }
+///////////////////////////////////////////////////////////////////////////
+
+}

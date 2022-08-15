@@ -1,0 +1,45 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v2012                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+
+runTimeControl1
+{
+    type            runTimeControl;
+    libs            (utilityFunctionObjects);
+    controlMode     trigger;
+    triggerStart    1;
+    conditions
+    {
+        condition1
+        {
+            type                average;
+            functionObject      forceCoeffs1;
+            fields              (Cd Cl);
+            tolerance           1e-2;
+            window              10;
+            windowType          approximate;
+        }
+    }
+}
+
+runTimeControl2
+{
+    type            runTimeControl;
+    libs            (utilityFunctionObjects);
+    conditions
+    {
+        conditions1
+        {
+            type                maxDuration;
+            duration            100;
+        }
+    }
+    satisfiedAction     setTrigger;
+    trigger             1;
+}
+
+// ************************************************************************* //
